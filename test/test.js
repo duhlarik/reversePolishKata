@@ -48,7 +48,7 @@ describe('basic two operand tests', function() {
 
 });
 
-describe('test multiple operands of same operator', function() {
+describe('test two operators without parenthesis', function() {
 
     var testReversePolish;
 
@@ -60,5 +60,11 @@ describe('test multiple operands of same operator', function() {
         let rpn = testReversePolish.toRPN('a+b+c');
 
         expect(rpn).to.equal('abc++');
+    });
+
+    it('should convert a+b-c to abc-+', function() {
+        let rpn = testReversePolish.toRPN('a+b-c');
+
+        expect(rpn).to.equal('abc-+');
     });
 });
