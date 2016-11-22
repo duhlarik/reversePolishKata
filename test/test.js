@@ -15,4 +15,28 @@ describe('basic two operand tests', function() {
 
         expect(rpn).to.equal('ab+');
     });
+
+    it('should convert a-b to ab-', function() {
+        let rpn = testReversePolish.toRPN('a-b');
+
+        expect(rpn).to.equal('ab-');
+    });
+
+    it('should convert a*b to ab*', function() {
+        let rpn = testReversePolish.toRPN('a*b');
+
+        expect(rpn).to.equal('ab*');
+    });
+
+    it('should convert a/b to ab/', function() {
+        let rpn = testReversePolish.toRPN('a/b');
+
+        expect(rpn).to.equal('ab/');
+    });
+
+    it('should convert a^b to ab^', function() {
+        let rpn = testReversePolish.toRPN('a^b');
+
+        expect(rpn).to.equal('ab^');
+    });
 });
