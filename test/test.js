@@ -67,4 +67,16 @@ describe('test two operators without parenthesis', function() {
 
         expect(rpn).to.equal('abc-+');
     });
+
+    it('should convert a*b*c to abc**', function() {
+        let rpn = testReversePolish.toRPN('a*b*c');
+
+        expect(rpn).to.equal('abc**');
+    });
+
+    // it('should convert a/b/c to ab/c/', function() {
+    //     let rpn = testReversePolish.toRPN('a/b/c');
+
+    //     expect(rpn).to.equal('ab/c/');
+    // });
 });
