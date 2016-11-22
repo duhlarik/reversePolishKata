@@ -1,0 +1,15 @@
+{
+  "name": "reversepolishkata",
+  "version": "1.0.0",
+  "description": "Reverse Polish Kata",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2"
+  }
+}
