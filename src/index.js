@@ -10,12 +10,11 @@ ReversePolish.prototype.toRPN = function (infix) {
     var outputQ = [];
 
     while (inputQ.length > 0) {
-
         singleChar = inputQ.shift();
-        if (singleChar.match(/[a-z]/g) != null) {
+        if (this.isOperand(singleChar)) {
             outputQ.push(singleChar);
         }
-        else if (singleChar.match(/[\+\-\^\/*]/g) != null) {
+        else if (this.isOperator(singleChar)) {
             operatorStack.push(singleChar);
         }
     }
@@ -27,22 +26,19 @@ ReversePolish.prototype.toRPN = function (infix) {
         singleChar = operatorStack.pop();
     }
 
-    // let rpnOperands = infix.replace(/[\+\-\^\/*]/g, '');
-
-    // let rpnOperators = infix.replace(/[a-z]/g, '');
-    // rpnOperators = this.reverseString(rpnOperators);
-
-    // return rpnOperands + rpnOperators;
-
     return outputQ.join('');
 }
-
-
 
 ReversePolish.prototype.reverseString = function (str) {
     return str.split('').reverse().join('');
 }
 
+ReversePolish.prototype.isOperand = function (singleChar) {
+    return singleChar.match(/[a-z]/g) != null;
+}
 
+ReversePolish.prototype.isOperator = function (singleChar) {
+    return singleChar.match(/[\+\-\^\/*]/g) != null;
+}
 
 module.exports = ReversePolish;
