@@ -3,8 +3,12 @@ function ReversePolish() {
 }
 
 ReversePolish.prototype.toRPN = function (infix) {
-    return infix[0] + infix[2] + infix[1];
 
+    let rpnOperands = infix.replace(/[\+\-\^\/*]/g, '');
+
+    let rpnOperators = infix.replace(/[a-z]/g, '');
+
+    return rpnOperands + rpnOperators;
 }
 
 module.exports = ReversePolish;
