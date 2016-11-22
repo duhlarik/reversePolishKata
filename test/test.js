@@ -56,10 +56,11 @@ describe('test two operators without parenthesis', function() {
         testReversePolish = new ReversePolish(); 
     });
 
-    it('should convert a+b+c to abc++', function() {
+    //YES. IT IS a+b+c >> ab+c+ .  TRUST ME.  
+    it('should convert a+b+c to ab+c+', function() {
         let rpn = testReversePolish.toRPN('a+b+c');
 
-        expect(rpn).to.equal('abc++');
+        expect(rpn).to.equal('ab+c+');
     });
 
     it('should convert a+b-c to abc-+', function() {
@@ -68,15 +69,35 @@ describe('test two operators without parenthesis', function() {
         expect(rpn).to.equal('abc-+');
     });
 
-    it('should convert a*b*c to abc**', function() {
+    //YES. IT IS a*b*c >> ab*c* .  TRUST ME. 
+    it('should convert a*b*c to ab*c*', function() {
         let rpn = testReversePolish.toRPN('a*b*c');
 
-        expect(rpn).to.equal('abc**');
+        expect(rpn).to.equal('ab*c*');
     });
 
-    // it('should convert a/b/c to ab/c/', function() {
-    //     let rpn = testReversePolish.toRPN('a/b/c');
+    it('should convert a/b/c to ab/c/', function() {
+        let rpn = testReversePolish.toRPN('a/b/c');
 
-    //     expect(rpn).to.equal('ab/c/');
-    // });
+        expect(rpn).to.equal('ab/c/');
+    });
+});
+
+describe('testing operator precedence', function() {
+    
+    var testReversePolish;
+
+    beforeEach(function() {
+        testReversePolish = new ReversePolish(); 
+    });
+  
+    it('should return the precedence value of the ^', function() {
+        let value = testReversePolish.getOperatorPrecedence('^');
+        expect(value).to.equal(1);
+    });
+
+    it('should return the precedence value of the /', function() {
+        let value = testReversePolish.getOperatorPrecedence('/');
+        expect(value).to.equal(2);
+    });
 });
