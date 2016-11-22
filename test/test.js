@@ -46,6 +46,4 @@ describe('basic two operand tests', function() {
         expect(rpn).to.equal('cb+');
     });
 
-    
-
 });
