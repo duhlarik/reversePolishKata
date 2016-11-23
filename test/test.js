@@ -107,6 +107,19 @@ describe('test two operators without parenthesis', function() {
     });
 });
 
+describe('test two operators with parenthesis', function(){
+    var testReversePolish;
+
+    beforeEach(function() {
+        testReversePolish = new ReversePolish(); 
+    });
+
+    it('should convert (a+b) to ab+', function() {
+        let rpn = testReversePolish.toRPN('(a+b)');
+        expect(rpn).to.equal('ab+');
+    });
+});
+
 describe('test many operators without parenthesis', function() {
     
     var testReversePolish;
@@ -120,8 +133,43 @@ describe('test many operators without parenthesis', function() {
 
         expect(rpn).to.equal('lmn^/o*p-');
     });
+});
 
+describe('test many operators with parenthesis', function() {
+    var testReversePolish;
+    beforeEach(function() {
+        testReversePolish = new ReversePolish(); 
+    });
 
+    it('should convert (a+b)-c to ab+c-', function() {
+        let rpn = testReversePolish.toRPN('(a+b)-c');
+
+        expect(rpn).to.equal('ab+c-');
+    });
+
+    it('should convert ((a+b)-c) to ab+c-', function() {
+        let rpn = testReversePolish.toRPN('((a+b)-c)');
+
+        expect(rpn).to.equal('ab+c-');
+    });
+
+    it('should convert ((l/(m^n))*o)-p to lmn^/o*p-', function() {
+        let rpn = testReversePolish.toRPN('((l/(m^n))*o)-p');
+
+        expect(rpn).to.equal('lmn^/o*p-');
+    });
+
+    it('should convert ((v/w)^x)*(y-z) to vw/x^yz-*', function() {
+        let rpn = testReversePolish.toRPN('((v/w)^x)*(y-z)');
+
+        expect(rpn).to.equal('vw/x^yz-*');
+    });
+
+    it('should convert (a+g)*(((b-a)+c)^(c+(e*(d^f)))) to ag+ba-c+cedf^*+^*', function() {
+        let rpn = testReversePolish.toRPN('(a+g)*(((b-a)+c)^(c+(e*(d^f))))');
+
+        expect(rpn).to.equal('ag+ba-c+cedf^*+^*');
+    });
 });
 
 describe('testing operator precedence', function() {
@@ -141,7 +189,6 @@ describe('testing operator precedence', function() {
         let value = testReversePolish.getOperatorPrecedence('/');
         expect(value).to.equal(4);
     });
-    
 });
 
 describe('testing seekTopOfStack function', function() {

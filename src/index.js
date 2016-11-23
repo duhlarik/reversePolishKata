@@ -15,11 +15,18 @@ ReversePolish.prototype.toRPN = function (infix) {
             outputQ.push(singleChar);
         }
         else if (this.isOperator(singleChar)) {
-
             if(operatorStack.length > 0 && this.isOperatorLessThanOrEqualToTopOfStack(singleChar,operatorStack)) {
                 this.purgeStackToOutputQ(outputQ, operatorStack);
             }
             operatorStack.push(singleChar);
+        } else if(singleChar == '('){
+            operatorStack.push(singleChar);
+        } else if(singleChar == ')'){
+            let stackChar = operatorStack.pop();
+            while(stackChar != null && stackChar != '(') {
+                outputQ.push(stackChar);
+                stackChar = operatorStack.pop();
+            }
         }
     }
 
@@ -47,27 +54,21 @@ ReversePolish.prototype.getOperatorPrecedence = function(singleChar) {
 
 ReversePolish.prototype.purgeStackToOutputQ = function(outputQ, operatorStack) {
     let singleChar = operatorStack.pop();
-
     while(singleChar != null) {
-
         outputQ.push(singleChar);
-
         singleChar = operatorStack.pop();
     }
 }
 
 ReversePolish.prototype.isOperatorLessThanOrEqualToTopOfStack = function(singleChar, operatorStack) {
-
     return this.getOperatorPrecedence(singleChar) 
                     <= this.getOperatorPrecedence(this.seekTopOfStack(operatorStack));
 }
 
 ReversePolish.prototype.seekTopOfStack = function(operatorStack) {
-
     if(operatorStack.length == 0) {
         return null;
     }
-
     return operatorStack[operatorStack.length-1];
 }
 
