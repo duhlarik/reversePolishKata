@@ -5,8 +5,8 @@ function ReversePolish() {
 ReversePolish.prototype.toInfix = function (rpn) {
 
     var inputQ = rpn.split('');
-    var operandStack = [];
-    var outputQ = [];
+    var operandQ = [];
+    var outputStack = [];
 
     while (inputQ.length > 0) {
 
@@ -14,26 +14,38 @@ ReversePolish.prototype.toInfix = function (rpn) {
 
         if (this.isOperator(singleChar)) {
 
-            if (operandStack.length == 2) {
-                outputQ.push(operandStack.pop());
-                outputQ.push(singleChar);
-                outputQ.push(operandStack.pop());
+            if (operandQ.length == 1) {
+
+                outputStack.unshift('(');
+                outputStack.push(')');
+
+                if(inputQ.length == 0) {
+                    outputStack.push(singleChar);
+                    outputStack.push(operandQ.pop());
+                }
+                else {
+                    outputStack.push(singleChar);
+                    outputStack.push(operandQ.pop());
+                }
             }
             else {
-                outputQ.push(singleChar);
-                outputQ.push(operandStack.pop());
+                
+                outputStack.push(operandQ.pop());
+                outputStack.push(singleChar);
+                outputStack.push(operandQ.pop());
+                
             }
         }
         else {
 
-            operandStack.unshift(singleChar);
+            operandQ.unshift(singleChar);
         }
     }
 
-    return outputQ.join('');
+    return outputStack.join('');
 }
 
-ReversePolish.prototype.toRPN = function (infix) {
+ReversePolish.prototype.toRPN = function(infix) {
 
     var inputQ = infix.split('');
     var operatorStack = [];
