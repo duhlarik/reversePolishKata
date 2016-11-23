@@ -19,14 +19,10 @@ ReversePolish.prototype.toRPN = function (infix) {
                 this.purgeStackToOutputQ(outputQ, operatorStack);
             }
             operatorStack.push(singleChar);
-        } else if(singleChar == '('){
+        } else if(this.isOpenParanthesis(singleChar)){
             operatorStack.push(singleChar);
-        } else if(singleChar == ')'){
-            let stackChar = operatorStack.pop();
-            while(stackChar != null && stackChar != '(') {
-                outputQ.push(stackChar);
-                stackChar = operatorStack.pop();
-            }
+        } else if(this.isCloseParanthesis(singleChar)){
+            this.purgeStackToOutputQ(outputQ, operatorStack);
         }
     }
 
@@ -43,6 +39,14 @@ ReversePolish.prototype.isOperand = function (singleChar) {
     return singleChar.match(/[a-z]/g) != null;
 }
 
+ReversePolish.prototype.isOpenParanthesis = function(singleChar){
+    return singleChar == '(';
+}
+
+ReversePolish.prototype.isCloseParanthesis = function(singleChar){
+    return singleChar == ')';
+}
+
 ReversePolish.prototype.isOperator = function (singleChar) {
     return singleChar.match(/[\+\-\^\/*]/g) != null;
 }
@@ -54,7 +58,7 @@ ReversePolish.prototype.getOperatorPrecedence = function(singleChar) {
 
 ReversePolish.prototype.purgeStackToOutputQ = function(outputQ, operatorStack) {
     let singleChar = operatorStack.pop();
-    while(singleChar != null) {
+    while(singleChar != null && singleChar != '(') {
         outputQ.push(singleChar);
         singleChar = operatorStack.pop();
     }
