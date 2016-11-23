@@ -268,9 +268,9 @@ describe('testing rpn to infix conversion', function () {
             expect(infix).to.equal('a-(b+c)');
         });
 
-        // it('should convert ag+ba-c+cedf^*+^* to (a+g)*(((b-a)+c)^(c+(e*(d^f))))', function () {
-        //     let infix = testReversePolish.toInfix('ag+ba-c+cedf^*+^*');
-        //     expect(infix).to.equal('(a+g)*(((b-a)+c)^(c+(e*(d^f))))');
-        // });
+        it('should convert ag+ba-c+cedf^*+^* to (a+g)*(((b-a)+c)^(c+(e*(d^f))))', function () {
+            let infix = testReversePolish.toInfix('ag+ba-c+cedf^*+^*');
+            expect(infix).to.equal('(a+g)*(((b-a)+c)^(c+(e*(d^f))))');
+        });
     });
 });

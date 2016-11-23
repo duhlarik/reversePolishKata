@@ -21,58 +21,22 @@ ReversePolish.prototype.toInfix = function (rpn) {
 
             if(firstOperand.length > 1) {
 
-                tempQ = firstOperand.split('');
-
-                tempQ.unshift('(');
-                tempQ.push(')');
-
-                firstOperand = tempQ.join('');
+                firstOperand = this.surroundWithParenthesis(firstOperand);
             }
 
             if(secondOperand.length > 1) {
 
-                tempQ = secondOperand.split('');
-
-                tempQ.unshift('(');
-                tempQ.push(')');
-
-                secondOperand = tempQ.join('');
+                secondOperand = this.surroundWithParenthesis(secondOperand);
             }
 
             let resultOperand = this.createInfixString(firstOperand,singleChar,secondOperand);
 
             solutionStack.push(resultOperand);
 
-            // if (operandQ.length == 1) {
-
-            //     outputStack.unshift('(');
-            //     outputStack.push(')');
-            //     outputStack.push(singleChar);
-            //     outputStack.push(operandQ.pop());
-            // }
-            // else if (operandQ.length == 2){
-                
-            //     outputStack.push(operandQ.pop());
-            //     outputStack.push(singleChar);
-            //     outputStack.push(operandQ.pop());  
-            // }
-            // else {
-            //     let holdingQueue = [];
-            //     holdingQueue.push(operandQ.pop());
-            //     holdingQueue.push(singleChar);
-            //     holdingQueue.push(operandQ.pop()); 
-            //     holdingQueue.unshift('(');
-            //     holdingQueue.push(')');
-            //     outputStack = outputStack.concat(holdingQueue);
-            //     console.log(outputStack);
-            // }
-
         }
         else {
 
             solutionStack.push(singleChar);
-
-            //operandQ.unshift(singleChar);
         }
     }
 
@@ -80,6 +44,10 @@ ReversePolish.prototype.toInfix = function (rpn) {
 
     return solutionString;
 }
+
+ReversePolish.prototype.surroundWithParenthesis = function (str) {
+    return '(' + str + ')';
+} 
 
 ReversePolish.prototype.createInfixString = function(firstOperand, operator, secondOperand) {
     return firstOperand + operator + secondOperand;
