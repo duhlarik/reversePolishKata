@@ -5,9 +5,6 @@ function ReversePolish() {
 ReversePolish.prototype.toInfix = function (rpn) {
 
     var inputQ = rpn.split('');
-    var operandQ = [];
-    var outputStack = [];
-
     var solutionStack = [];
 
     while (inputQ.length > 0) {
@@ -39,10 +36,8 @@ ReversePolish.prototype.toInfix = function (rpn) {
             solutionStack.push(singleChar);
         }
     }
-
-    let solutionString = solutionStack.pop();
-
-    return solutionString;
+    
+    return solutionStack.pop();
 }
 
 ReversePolish.prototype.surroundWithParenthesis = function (str) {
