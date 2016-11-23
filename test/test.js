@@ -2,7 +2,7 @@ var chai = require('chai');
 var expect = require('chai').expect;
 var ReversePolish = require('../src/index.js');
 
-describe('basic two operand tests', function() {
+describe('testing infix to rpn conversion', function() {
 
     var testReversePolish;
 
@@ -10,202 +10,173 @@ describe('basic two operand tests', function() {
         testReversePolish = new ReversePolish(); 
     });
 
-    it('should convert a+b to ab+', function() {
-        let rpn = testReversePolish.toRPN('a+b');
+    describe('basic two operand tests', function() {
 
-        expect(rpn).to.equal('ab+');
+        it('should convert a+b to ab+', function() {
+            let rpn = testReversePolish.toRPN('a+b');
+
+            expect(rpn).to.equal('ab+');
+        });
+
+        it('should convert a-b to ab-', function() {
+            let rpn = testReversePolish.toRPN('a-b');
+
+            expect(rpn).to.equal('ab-');
+        });
+
+        it('should convert a*b to ab*', function() {
+            let rpn = testReversePolish.toRPN('a*b');
+
+            expect(rpn).to.equal('ab*');
+        });
+
+        it('should convert a/b to ab/', function() {
+            let rpn = testReversePolish.toRPN('a/b');
+
+            expect(rpn).to.equal('ab/');
+        });
+
+        it('should convert a^b to ab^', function() {
+            let rpn = testReversePolish.toRPN('a^b');
+
+            expect(rpn).to.equal('ab^');
+        });
+
+        it('should convert c+b to cb+', function() {
+            let rpn = testReversePolish.toRPN('c+b');
+
+            expect(rpn).to.equal('cb+');
+        });
+
     });
 
-    it('should convert a-b to ab-', function() {
-        let rpn = testReversePolish.toRPN('a-b');
+    describe('test two operators without parenthesis', function() {
 
-        expect(rpn).to.equal('ab-');
+        //YES. IT IS a+b+c >> ab+c+ .  TRUST ME.  
+        it('should convert a+b+c to ab+c+', function() {
+            let rpn = testReversePolish.toRPN('a+b+c');
+
+            expect(rpn).to.equal('ab+c+');
+        });
+
+        it('should convert a+b-c to abc-+', function() {
+            let rpn = testReversePolish.toRPN('a+b-c');
+
+            expect(rpn).to.equal('abc-+');
+        });
+
+        //YES. IT IS a*b*c >> ab*c* .  TRUST ME. 
+        it('should convert a*b*c to ab*c*', function() {
+            let rpn = testReversePolish.toRPN('a*b*c');
+
+            expect(rpn).to.equal('ab*c*');
+        });
+
+        it('should convert a/b/c to ab/c/', function() {
+            let rpn = testReversePolish.toRPN('a/b/c');
+
+            expect(rpn).to.equal('ab/c/');
+        });
+
+        it('should convert a/b*c to ab/c*', function() {
+            let rpn = testReversePolish.toRPN('a/b*c');
+
+            expect(rpn).to.equal('ab/c*');
+        });
+
+        it('should convert a^b^c to ab^c^', function() {
+            let rpn = testReversePolish.toRPN('a^b^c');
+
+            expect(rpn).to.equal('ab^c^');
+        });
+
+        it('should convert a^b^c to ab^c^', function() {
+            let rpn = testReversePolish.toRPN('a^b^c');
+
+            expect(rpn).to.equal('ab^c^');
+        });
+
+        it('should convert a/b^c to abc^/', function() {
+            let rpn = testReversePolish.toRPN('a/b^c');
+
+            expect(rpn).to.equal('abc^/');
+        });
     });
 
-    it('should convert a*b to ab*', function() {
-        let rpn = testReversePolish.toRPN('a*b');
+    describe('test two operators with parenthesis', function(){
 
-        expect(rpn).to.equal('ab*');
+        it('should convert (a+b) to ab+', function() {
+            let rpn = testReversePolish.toRPN('(a+b)');
+            expect(rpn).to.equal('ab+');
+        });
     });
 
-    it('should convert a/b to ab/', function() {
-        let rpn = testReversePolish.toRPN('a/b');
+    describe('test many operators without parenthesis', function() {
+        
+        it('should convert l/m^n*o-p to lmn^/o*p-', function() {
+            let rpn = testReversePolish.toRPN('l/m^n*o-p');
 
-        expect(rpn).to.equal('ab/');
+            expect(rpn).to.equal('lmn^/o*p-');
+        });
     });
 
-    it('should convert a^b to ab^', function() {
-        let rpn = testReversePolish.toRPN('a^b');
+    describe('test many operators with parenthesis', function() {
 
-        expect(rpn).to.equal('ab^');
+        it('should convert (a+b)-c to ab+c-', function() {
+            let rpn = testReversePolish.toRPN('(a+b)-c');
+
+            expect(rpn).to.equal('ab+c-');
+        });
+
+        it('should convert ((a+b)-c) to ab+c-', function() {
+            let rpn = testReversePolish.toRPN('((a+b)-c)');
+
+            expect(rpn).to.equal('ab+c-');
+        });
+
+        it('should convert ((l/(m^n))*o)-p to lmn^/o*p-', function() {
+            let rpn = testReversePolish.toRPN('((l/(m^n))*o)-p');
+
+            expect(rpn).to.equal('lmn^/o*p-');
+        });
+
+        it('should convert ((v/w)^x)*(y-z) to vw/x^yz-*', function() {
+            let rpn = testReversePolish.toRPN('((v/w)^x)*(y-z)');
+
+            expect(rpn).to.equal('vw/x^yz-*');
+        });
+
+        it('should convert (a+g)*(((b-a)+c)^(c+(e*(d^f)))) to ag+ba-c+cedf^*+^*', function() {
+            let rpn = testReversePolish.toRPN('(a+g)*(((b-a)+c)^(c+(e*(d^f))))');
+
+            expect(rpn).to.equal('ag+ba-c+cedf^*+^*');
+        });
     });
 
-    it('should convert c+b to cb+', function() {
-        let rpn = testReversePolish.toRPN('c+b');
-
-        expect(rpn).to.equal('cb+');
-    });
-
-});
-
-describe('test two operators without parenthesis', function() {
-
-    var testReversePolish;
-
-    beforeEach(function() {
-        testReversePolish = new ReversePolish(); 
-    });
-
-    //YES. IT IS a+b+c >> ab+c+ .  TRUST ME.  
-    it('should convert a+b+c to ab+c+', function() {
-        let rpn = testReversePolish.toRPN('a+b+c');
-
-        expect(rpn).to.equal('ab+c+');
-    });
-
-    it('should convert a+b-c to abc-+', function() {
-        let rpn = testReversePolish.toRPN('a+b-c');
-
-        expect(rpn).to.equal('abc-+');
-    });
-
-    //YES. IT IS a*b*c >> ab*c* .  TRUST ME. 
-    it('should convert a*b*c to ab*c*', function() {
-        let rpn = testReversePolish.toRPN('a*b*c');
-
-        expect(rpn).to.equal('ab*c*');
-    });
-
-    it('should convert a/b/c to ab/c/', function() {
-        let rpn = testReversePolish.toRPN('a/b/c');
-
-        expect(rpn).to.equal('ab/c/');
-    });
-
-    it('should convert a/b*c to ab/c*', function() {
-        let rpn = testReversePolish.toRPN('a/b*c');
-
-        expect(rpn).to.equal('ab/c*');
-    });
-
-    it('should convert a^b^c to ab^c^', function() {
-        let rpn = testReversePolish.toRPN('a^b^c');
-
-        expect(rpn).to.equal('ab^c^');
-    });
-
-    it('should convert a^b^c to ab^c^', function() {
-        let rpn = testReversePolish.toRPN('a^b^c');
-
-        expect(rpn).to.equal('ab^c^');
-    });
-
-    it('should convert a/b^c to abc^/', function() {
-        let rpn = testReversePolish.toRPN('a/b^c');
-
-        expect(rpn).to.equal('abc^/');
-    });
-});
-
-describe('test two operators with parenthesis', function(){
-    var testReversePolish;
-
-    beforeEach(function() {
-        testReversePolish = new ReversePolish(); 
-    });
-
-    it('should convert (a+b) to ab+', function() {
-        let rpn = testReversePolish.toRPN('(a+b)');
-        expect(rpn).to.equal('ab+');
-    });
-});
-
-describe('test many operators without parenthesis', function() {
+    describe('testing operator precedence', function() {
+        
     
-    var testReversePolish;
+        it('should return the precedence value of the ^', function() {
+            let value = testReversePolish.getOperatorPrecedence('^');
+            expect(value).to.equal(5);
+        });
 
-    beforeEach(function() {
-        testReversePolish = new ReversePolish(); 
+        it('should return the precedence value of the /', function() {
+            let value = testReversePolish.getOperatorPrecedence('/');
+            expect(value).to.equal(4);
+        });
     });
 
-    it('should convert l/m^n*o-p to lmn^/o*p-', function() {
-        let rpn = testReversePolish.toRPN('l/m^n*o-p');
+    describe('testing seekTopOfStack function', function() {
 
-        expect(rpn).to.equal('lmn^/o*p-');
-    });
-});
+        it('should return the last character of abcde', function() {
+            let singleChar = testReversePolish.seekTopOfStack('abcde');
+            expect(singleChar).to.equal('e');
+        });
 
-describe('test many operators with parenthesis', function() {
-    var testReversePolish;
-    beforeEach(function() {
-        testReversePolish = new ReversePolish(); 
-    });
-
-    it('should convert (a+b)-c to ab+c-', function() {
-        let rpn = testReversePolish.toRPN('(a+b)-c');
-
-        expect(rpn).to.equal('ab+c-');
-    });
-
-    it('should convert ((a+b)-c) to ab+c-', function() {
-        let rpn = testReversePolish.toRPN('((a+b)-c)');
-
-        expect(rpn).to.equal('ab+c-');
-    });
-
-    it('should convert ((l/(m^n))*o)-p to lmn^/o*p-', function() {
-        let rpn = testReversePolish.toRPN('((l/(m^n))*o)-p');
-
-        expect(rpn).to.equal('lmn^/o*p-');
-    });
-
-    it('should convert ((v/w)^x)*(y-z) to vw/x^yz-*', function() {
-        let rpn = testReversePolish.toRPN('((v/w)^x)*(y-z)');
-
-        expect(rpn).to.equal('vw/x^yz-*');
-    });
-
-    it('should convert (a+g)*(((b-a)+c)^(c+(e*(d^f)))) to ag+ba-c+cedf^*+^*', function() {
-        let rpn = testReversePolish.toRPN('(a+g)*(((b-a)+c)^(c+(e*(d^f))))');
-
-        expect(rpn).to.equal('ag+ba-c+cedf^*+^*');
-    });
-});
-
-describe('testing operator precedence', function() {
-    
-    var testReversePolish;
-
-    beforeEach(function() {
-        testReversePolish = new ReversePolish(); 
-    });
-  
-    it('should return the precedence value of the ^', function() {
-        let value = testReversePolish.getOperatorPrecedence('^');
-        expect(value).to.equal(5);
-    });
-
-    it('should return the precedence value of the /', function() {
-        let value = testReversePolish.getOperatorPrecedence('/');
-        expect(value).to.equal(4);
-    });
-});
-
-describe('testing seekTopOfStack function', function() {
-    
-    var testReversePolish;
-
-    beforeEach(function() {
-        testReversePolish = new ReversePolish(); 
-    });
-
-    it('should return the last character of abcde', function() {
-        let singleChar = testReversePolish.seekTopOfStack('abcde');
-        expect(singleChar).to.equal('e');
-    });
-
-    it('should return null if stack is empty', function() {
-        let singleChar = testReversePolish.seekTopOfStack('');
-        expect(singleChar).to.equal(null);
+        it('should return null if stack is empty', function() {
+            let singleChar = testReversePolish.seekTopOfStack('');
+            expect(singleChar).to.equal(null);
+        });
     });
 });
