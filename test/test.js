@@ -81,6 +81,12 @@ describe('test two operators without parenthesis', function() {
 
         expect(rpn).to.equal('ab/c/');
     });
+
+    it('should convert a/b*c to ab/c*', function() {
+        let rpn = testReversePolish.toRPN('a/b*c');
+
+        expect(rpn).to.equal('ab/c*');
+    });
 });
 
 describe('testing operator precedence', function() {
@@ -93,11 +99,12 @@ describe('testing operator precedence', function() {
   
     it('should return the precedence value of the ^', function() {
         let value = testReversePolish.getOperatorPrecedence('^');
-        expect(value).to.equal(1);
+        expect(value).to.equal(5);
     });
 
     it('should return the precedence value of the /', function() {
         let value = testReversePolish.getOperatorPrecedence('/');
-        expect(value).to.equal(2);
+        expect(value).to.equal(4);
     });
+    
 });

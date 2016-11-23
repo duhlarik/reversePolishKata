@@ -17,8 +17,10 @@ ReversePolish.prototype.toRPN = function (infix) {
         else if (this.isOperator(singleChar)) {
 
             if(operatorStack.length > 0){
+                console.log(this.getOperatorPrecedence(singleChar) 
+                + ' ' + this.getOperatorPrecedence(operatorStack[operatorStack.length-1]));
                 if(this.getOperatorPrecedence(singleChar) 
-                    >= this.getOperatorPrecedence(operatorStack[operatorStack.length-1])) {
+                    <= this.getOperatorPrecedence(operatorStack[operatorStack.length-1])) {
                         this.purgeStackToOutputQ(outputQ, operatorStack);
                 }
             }
@@ -44,15 +46,19 @@ ReversePolish.prototype.isOperator = function (singleChar) {
 }
 
 ReversePolish.prototype.getOperatorPrecedence = function(singleChar) {
-    var operatorList = '^/*-+';
+    var operatorList = '+-*/^';
     return operatorList.indexOf(singleChar) +1;
 }
 
 ReversePolish.prototype.purgeStackToOutputQ = function(outputQ, operatorStack) {
     let singleChar = operatorStack.pop();
 
+    
+
     while(singleChar != null) {
+
         outputQ.push(singleChar);
+
         singleChar = operatorStack.pop();
     }
 }
