@@ -180,3 +180,20 @@ describe('testing infix to rpn conversion', function() {
         });
     });
 });
+
+describe('testing rpn to infix conversion', function() {
+
+    var testReversePolish;
+
+    beforeEach(function() {
+        testReversePolish = new ReversePolish(); 
+    });
+
+    describe('basic two operand tests', function() {
+        it('should convert ab+ to a+b', function() {
+
+            let infix = testReversePolish.toInfix('ab+');
+            expect(infix).to.equal('a+b');
+        });
+    });
+});

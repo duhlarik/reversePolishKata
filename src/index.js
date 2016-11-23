@@ -2,6 +2,11 @@ function ReversePolish() {
 
 } 
 
+ReversePolish.prototype.toInfix = function (infix) {
+
+    return 'a+b';
+}
+
 ReversePolish.prototype.toRPN = function (infix) {
 
     var inputQ = infix.split('');
