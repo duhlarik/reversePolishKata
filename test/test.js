@@ -238,11 +238,39 @@ describe('testing rpn to infix conversion', function () {
             expect(infix).to.equal('((a+b)+c)+d');
         });
 
+        it('should convert ab^c^d^ to ((a^b)^c)^d', function () {
+            let infix = testReversePolish.toInfix('ab^c^d^');
+            expect(infix).to.equal('((a^b)^c)^d');
+        });
+
     });
-    // describe('test multiple operators of different type', function () {
-    //     it('should convert ag+ba-c+cedf^*+^* to (a+g)*(((b-a)+c)^(c+(e*(d^f))))', function () {
-    //         let infix = testReversePolish.toInfix('ag+ba-c+cedf^*+^*');
-    //         expect(infix).to.equal('(a+g)*(((b-a)+c)^(c+(e*(d^f))))');
-    //     });
-    // });
+    describe('test multiple operators of different type', function () {
+
+        it('should convert ab+c- to (a+b)-c', function () {
+            let infix = testReversePolish.toInfix('ab+c-');
+            expect(infix).to.equal('(a+b)-c');
+        });
+
+        it('should convert ab*c- to (a*b)-c', function () {
+            let infix = testReversePolish.toInfix('ab*c-');
+            expect(infix).to.equal('(a*b)-c');
+        });
+
+        it('should convert abc^/ to a/(b^c)', function () {
+            let infix = testReversePolish.toInfix('abc^/');
+
+            expect(infix).to.equal('a/(b^c)');
+        });
+
+        it('should convert abc+- to a-(b+c)', function () {
+            let infix = testReversePolish.toInfix('abc+-');
+
+            expect(infix).to.equal('a-(b+c)');
+        });
+
+        // it('should convert ag+ba-c+cedf^*+^* to (a+g)*(((b-a)+c)^(c+(e*(d^f))))', function () {
+        //     let infix = testReversePolish.toInfix('ag+ba-c+cedf^*+^*');
+        //     expect(infix).to.equal('(a+g)*(((b-a)+c)^(c+(e*(d^f))))');
+        // });
+    });
 });

@@ -8,42 +8,82 @@ ReversePolish.prototype.toInfix = function (rpn) {
     var operandQ = [];
     var outputStack = [];
 
+    var solutionStack = [];
+
     while (inputQ.length > 0) {
 
         var singleChar = inputQ.shift();
 
         if (this.isOperator(singleChar)) {
 
-            if (operandQ.length == 1) {
+            let secondOperand = solutionStack.pop();
+            let firstOperand = solutionStack.pop();
 
-                outputStack.unshift('(');
-                outputStack.push(')');
+            if(firstOperand.length > 1) {
 
-                if(inputQ.length == 0) {
-                    outputStack.push(singleChar);
-                    outputStack.push(operandQ.pop());
-                }
-                else {
-                    outputStack.push(singleChar);
-                    outputStack.push(operandQ.pop());
-                }
+                tempQ = firstOperand.split('');
+
+                tempQ.unshift('(');
+                tempQ.push(')');
+
+                firstOperand = tempQ.join('');
             }
-            else {
-                
-                outputStack.push(operandQ.pop());
-                outputStack.push(singleChar);
-                outputStack.push(operandQ.pop());
-                
+
+            if(secondOperand.length > 1) {
+
+                tempQ = secondOperand.split('');
+
+                tempQ.unshift('(');
+                tempQ.push(')');
+
+                secondOperand = tempQ.join('');
             }
+
+            let resultOperand = this.createInfixString(firstOperand,singleChar,secondOperand);
+
+            solutionStack.push(resultOperand);
+
+            // if (operandQ.length == 1) {
+
+            //     outputStack.unshift('(');
+            //     outputStack.push(')');
+            //     outputStack.push(singleChar);
+            //     outputStack.push(operandQ.pop());
+            // }
+            // else if (operandQ.length == 2){
+                
+            //     outputStack.push(operandQ.pop());
+            //     outputStack.push(singleChar);
+            //     outputStack.push(operandQ.pop());  
+            // }
+            // else {
+            //     let holdingQueue = [];
+            //     holdingQueue.push(operandQ.pop());
+            //     holdingQueue.push(singleChar);
+            //     holdingQueue.push(operandQ.pop()); 
+            //     holdingQueue.unshift('(');
+            //     holdingQueue.push(')');
+            //     outputStack = outputStack.concat(holdingQueue);
+            //     console.log(outputStack);
+            // }
+
         }
         else {
 
-            operandQ.unshift(singleChar);
+            solutionStack.push(singleChar);
+
+            //operandQ.unshift(singleChar);
         }
     }
 
-    return outputStack.join('');
+    let solutionString = solutionStack.pop();
+
+    return solutionString;
 }
+
+ReversePolish.prototype.createInfixString = function(firstOperand, operator, secondOperand) {
+    return firstOperand + operator + secondOperand;
+} 
 
 ReversePolish.prototype.toRPN = function(infix) {
 
