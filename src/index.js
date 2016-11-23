@@ -2,9 +2,9 @@ function ReversePolish() {
 
 } 
 
-ReversePolish.prototype.toInfix = function (infix) {
+ReversePolish.prototype.toInfix = function (rpn) {
 
-    return 'a+b';
+    return rpn[0] + rpn[2] + rpn[1];
 }
 
 ReversePolish.prototype.toRPN = function (infix) {

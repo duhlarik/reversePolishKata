@@ -195,5 +195,29 @@ describe('testing rpn to infix conversion', function() {
             let infix = testReversePolish.toInfix('ab+');
             expect(infix).to.equal('a+b');
         });
+
+        it('should convert ab- to a-b', function() {
+
+            let infix = testReversePolish.toInfix('ab-');
+            expect(infix).to.equal('a-b');
+        });
+
+        it('should convert ab* to a*b', function() {
+
+            let infix = testReversePolish.toInfix('ab*');
+            expect(infix).to.equal('a*b');
+        });
+
+        it('should convert ab/ to a/b', function() {
+
+            let infix = testReversePolish.toInfix('ab/');
+            expect(infix).to.equal('a/b');
+        });
+
+        it('should convert ab^ to a^b', function() {
+
+            let infix = testReversePolish.toInfix('ab^');
+            expect(infix).to.equal('a^b');
+        });
     });
 });
