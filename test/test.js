@@ -220,4 +220,22 @@ describe('testing rpn to infix conversion', function() {
             expect(infix).to.equal('a^b');
         });
     });
+
+    describe('test multiple operators of same type', function() {
+
+        it('should convert ab+c+ to a+b+c', function() {
+            let infix = testReversePolish.toInfix('ab+c+');
+            expect(infix).to.equal('a+b+c');
+        });
+
+        it('should convert ab-c- to a-b-c', function() {
+            let infix = testReversePolish.toInfix('ab-c-');
+            expect(infix).to.equal('a-b-c');
+        });
+
+        it('should convert ab+c+d+ to a+b+c+d', function() {
+            let infix = testReversePolish.toInfix('ab+c+d+');
+            expect(infix).to.equal('a+b+c+d');
+        });
+    });
 });
