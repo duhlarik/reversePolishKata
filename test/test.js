@@ -14,37 +14,31 @@ describe('testing infix to rpn conversion', function () {
 
         it('should convert a+b to ab+', function () {
             let rpn = testReversePolish.toRPN('a+b');
-
             expect(rpn).to.equal('ab+');
         });
 
         it('should convert a-b to ab-', function () {
             let rpn = testReversePolish.toRPN('a-b');
-
             expect(rpn).to.equal('ab-');
         });
 
         it('should convert a*b to ab*', function () {
             let rpn = testReversePolish.toRPN('a*b');
-
             expect(rpn).to.equal('ab*');
         });
 
         it('should convert a/b to ab/', function () {
             let rpn = testReversePolish.toRPN('a/b');
-
             expect(rpn).to.equal('ab/');
         });
 
         it('should convert a^b to ab^', function () {
             let rpn = testReversePolish.toRPN('a^b');
-
             expect(rpn).to.equal('ab^');
         });
 
         it('should convert c+b to cb+', function () {
             let rpn = testReversePolish.toRPN('c+b');
-
             expect(rpn).to.equal('cb+');
         });
 
@@ -55,50 +49,42 @@ describe('testing infix to rpn conversion', function () {
         //YES. IT IS a+b+c >> ab+c+ .  TRUST ME.  
         it('should convert a+b+c to ab+c+', function () {
             let rpn = testReversePolish.toRPN('a+b+c');
-
             expect(rpn).to.equal('ab+c+');
         });
 
         it('should convert a+b-c to abc-+', function () {
             let rpn = testReversePolish.toRPN('a+b-c');
-
             expect(rpn).to.equal('abc-+');
         });
 
         //YES. IT IS a*b*c >> ab*c* .  TRUST ME. 
         it('should convert a*b*c to ab*c*', function () {
             let rpn = testReversePolish.toRPN('a*b*c');
-
             expect(rpn).to.equal('ab*c*');
         });
 
         it('should convert a/b/c to ab/c/', function () {
             let rpn = testReversePolish.toRPN('a/b/c');
-
             expect(rpn).to.equal('ab/c/');
         });
 
         it('should convert a/b*c to ab/c*', function () {
             let rpn = testReversePolish.toRPN('a/b*c');
-
             expect(rpn).to.equal('ab/c*');
         });
 
         it('should convert a^b^c to ab^c^', function () {
             let rpn = testReversePolish.toRPN('a^b^c');
-
             expect(rpn).to.equal('ab^c^');
         });
 
         it('should convert a^b^c to ab^c^', function () {
             let rpn = testReversePolish.toRPN('a^b^c');
-
             expect(rpn).to.equal('ab^c^');
         });
 
         it('should convert a/b^c to abc^/', function () {
             let rpn = testReversePolish.toRPN('a/b^c');
-
             expect(rpn).to.equal('abc^/');
         });
     });
@@ -115,7 +101,6 @@ describe('testing infix to rpn conversion', function () {
 
         it('should convert l/m^n*o-p to lmn^/o*p-', function () {
             let rpn = testReversePolish.toRPN('l/m^n*o-p');
-
             expect(rpn).to.equal('lmn^/o*p-');
         });
     });
@@ -124,31 +109,26 @@ describe('testing infix to rpn conversion', function () {
 
         it('should convert (a+b)-c to ab+c-', function () {
             let rpn = testReversePolish.toRPN('(a+b)-c');
-
             expect(rpn).to.equal('ab+c-');
         });
 
         it('should convert ((a+b)-c) to ab+c-', function () {
             let rpn = testReversePolish.toRPN('((a+b)-c)');
-
             expect(rpn).to.equal('ab+c-');
         });
 
         it('should convert ((l/(m^n))*o)-p to lmn^/o*p-', function () {
             let rpn = testReversePolish.toRPN('((l/(m^n))*o)-p');
-
             expect(rpn).to.equal('lmn^/o*p-');
         });
 
         it('should convert ((v/w)^x)*(y-z) to vw/x^yz-*', function () {
             let rpn = testReversePolish.toRPN('((v/w)^x)*(y-z)');
-
             expect(rpn).to.equal('vw/x^yz-*');
         });
 
         it('should convert (a+g)*(((b-a)+c)^(c+(e*(d^f)))) to ag+ba-c+cedf^*+^*', function () {
             let rpn = testReversePolish.toRPN('(a+g)*(((b-a)+c)^(c+(e*(d^f))))');
-
             expect(rpn).to.equal('ag+ba-c+cedf^*+^*');
         });
     });

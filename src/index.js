@@ -77,10 +77,6 @@ ReversePolish.prototype.toRPN = function(infix) {
     return outputQ.join('');
 }
 
-ReversePolish.prototype.reverseString = function (str) {
-    return str.split('').reverse().join('');
-}
-
 ReversePolish.prototype.isOperand = function (singleChar) {
     return singleChar.match(/[a-z]/g) != null;
 }
